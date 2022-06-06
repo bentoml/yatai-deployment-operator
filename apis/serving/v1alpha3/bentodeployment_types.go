@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package v1alpha2
+package v1alpha3
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -27,6 +27,7 @@ import (
 
 type BentoDeploymentRunnerSpec struct {
 	Name        string                                  `json:"name,omitempty"`
+	Annotations map[string]string                       `json:"annotations,omitempty"`
 	Resources   *modelschemas.DeploymentTargetResources `json:"resources,omitempty"`
 	Autoscaling *modelschemas.DeploymentTargetHPAConf   `json:"autoscaling,omitempty"`
 	Envs        *[]modelschemas.LabelItemSchema         `json:"envs,omitempty"`
@@ -87,6 +88,7 @@ type BentoDeploymentStatus struct {
 //+genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:storageversion
 //+kubebuilder:printcolumn:name="Bento",type="string",JSONPath=".spec.bento_tag",description="BentoTag"
 //+kubebuilder:printcolumn:name="Ready",type="string",JSONPath=".status.printerReady",description="Ready"
 //+kubebuilder:printcolumn:name="MinReplicas",type="integer",JSONPath=".spec.autoscaling.min_replicas",description="MinReplicas"
